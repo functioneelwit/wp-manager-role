@@ -4,9 +4,25 @@ Plugin Name: Manager gebruiker (Publiek.com)
 Plugin URI: https://publiek.com
 Description: Deze plugin voegt het gebruikerstype 'Manager' toe en stelt daarvoor speciale rechten in.
 Author: Mattijs Wit
-Version: 1.1
+Version: 1.2
 Author URI: https://functioneelwit.nl
 */
+
+require_once dirname(__FILE__) . '/plugin-update-checker/plugin-update-checker.php';
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+function mijn_plugin_updates_instellen() {
+    $updateChecker = PucFactory::buildUpdateChecker(
+        'https://github.com/functioneelwit/wp-manager-role/',
+        __FILE__, // Let op: voor plugins gebruiken we __FILE__
+        'wp-manager-role'
+    );
+
+    // Specifiek de main branch volgen
+    $updateChecker->setBranch('main');
+}
+add_action('init', 'mijn_plugin_updates_instellen');
+
 
 function add_manager_role()
 {
@@ -121,15 +137,3 @@ function reorder_user_roles($roles) {
     return array_merge($new_roles, $roles);
 }
 add_filter('editable_roles', 'reorder_user_roles', 20);
-
-
-
-    // Vind alle gebruikers met manager rol
-    $managers = get_users(['role' => 'manager']);
-
-    foreach($managers as $user) {
-        $user->set_role('editor');
-    }
-
-    remove_role('manager');
-}
