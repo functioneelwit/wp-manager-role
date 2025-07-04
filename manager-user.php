@@ -10,43 +10,41 @@ Author URI: https://functioneelwit.nl
 
 function add_manager_role()
 {
-    // Verwijder de rol eerst als deze al bestaat
-    remove_role('manager');
 
-    // Get editor role capabilities
-    $editor = get_role('editor');
-    $editor_caps = $editor->capabilities;
+        // Get editor role capabilities
+        $editor = get_role('editor');
+        $editor_caps = $editor->capabilities;
 
-    // Voeg de nieuwe rol toe met editor capabilities
-    $manager = add_role(
-        'manager',
-        __('Manager'),
-        $editor_caps
-    );
-
-    if ($manager) {
-        // Custom post type capabilities
-        $custom_caps = array();
-
-        // Admin capabilities
-        $admin_caps = array(
-            'manage_options',
-            'list_users',
-            'edit_users',
-            'create_users',
-            'delete_users',
-            'promote_users',
-            'edit_theme_options',
-            'manage_categories',
-            'import',
-            'export'
+        // Voeg de nieuwe rol toe met editor capabilities
+        $manager = add_role(
+            'manager',
+            __('Manager'),
+            $editor_caps
         );
 
-        foreach (array_merge($custom_caps, $admin_caps) as $cap) {
-            $manager->add_cap($cap);
+        if ($manager) {
+            // Custom post type capabilities
+            $custom_caps = array();
+
+            // Admin capabilities
+            $admin_caps = array(
+                'manage_options',
+                'list_users',
+                'edit_users',
+                'create_users',
+                'delete_users',
+                'promote_users',
+                'edit_theme_options',
+                'manage_categories',
+                'import',
+                'export'
+            );
+
+            foreach (array_merge($custom_caps, $admin_caps) as $cap) {
+                $manager->add_cap($cap);
+            }
         }
     }
-}
 
 add_action('init', 'add_manager_role');
 
@@ -125,15 +123,10 @@ function reorder_user_roles($roles) {
 add_filter('editable_roles', 'reorder_user_roles', 20);
 
 
-// Manager rol weer verwijderen als de plugin gedeactiveerd wordt.
-// Alle gebruikers met een manager rol krijgen de rol editor.
-register_deactivation_hook(__FILE__, 'remove_manager_role_on_deactivation');
 
-function remove_manager_role_on_deactivation() {
     // Vind alle gebruikers met manager rol
     $managers = get_users(['role' => 'manager']);
 
-    // Wijs deze gebruikers een nieuwe rol toe (bijvoorbeeld 'editor')
     foreach($managers as $user) {
         $user->set_role('editor');
     }
