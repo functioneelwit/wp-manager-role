@@ -2,10 +2,10 @@
 /*
 Plugin Name: Manager gebruiker (Publiek.com)
 Plugin URI: https://publiek.com
-Description: Voeg het gebruikerstype 'Manager' toe en stel daarvoor speciale rechten in.
-Author: Mattijs Wit
-Version: 1.3
-Author URI: https://functioneelwit.nl
+Description: Deze plugin voegthet gebruikerstype 'Manager' toe en stelt daarvoor speciale rechten in.
+Author: Publiek.com
+Version: 1.4
+Author URI: https://publiek.com
 */
 
 require_once dirname(__FILE__) . '/plugin-update-checker/plugin-update-checker.php';

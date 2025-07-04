@@ -1,9 +1,9 @@
 === Manager gebruiker (Publiek.com) ===
-Contributors: Mattijs Wit
+Contributors: Publiek.com
 Tags: gebruikers, rollen, manager
-Requires at least: 5.0
-Tested up to: 6.4
-Stable tag: 1.1
+Requires at least: 6.6
+Tested up to: 6.8
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,3 @@ Deze plugin voegt het gebruikerstype 'Manager' toe. De manager rol heeft alle re
 De manager rol blijft behouden bij deactivatie om problemen bij het updaten van de plugin te voorkomen. De rol wordt pas definitief uit de database verwijderd als de plugin wordt verwijderd. Gebruikers met de manager rol krijgen dan de editor rol.
 
 == Changelog ==
-= 1.0 =
-* Eerste release
-= 1.1 =
-* Tweede release
