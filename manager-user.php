@@ -4,7 +4,7 @@ Plugin Name: Manager gebruiker (Publiek.com)
 Plugin URI: https://publiek.com
 Description: Deze plugin voegt het gebruikerstype 'Manager' toe en stelt daarvoor speciale rechten in.
 Author: Mattijs Wit
-Version: 1.0
+Version: 1.1
 Author URI: https://functioneelwit.nl
 */
 
