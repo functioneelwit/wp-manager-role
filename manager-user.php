@@ -2,7 +2,7 @@
 /*
 Plugin Name: Manager gebruiker (Publiek.com)
 Plugin URI: https://publiek.com
-Description: Deze plugin voegthet gebruikerstype 'Manager' toe en stelt daarvoor speciale rechten in.
+Description: Deze plugin voegt het gebruikerstypes 'Manager' & 'Formuliermanager' toe en stelt daarvoor speciale rechten in.
 Author: Publiek.com
 Version: 1.4
 Author URI: https://publiek.com
@@ -26,43 +26,93 @@ add_action('init', 'mijn_plugin_updates_instellen');
 
 function add_manager_role()
 {
+    // Get editor role capabilities
+    $editor = get_role('editor');
+    $editor_caps = $editor->capabilities;
 
-        // Get editor role capabilities
-        $editor = get_role('editor');
-        $editor_caps = $editor->capabilities;
+    // Voeg de nieuwe rol toe met editor capabilities
+    $manager = add_role(
+        'manager',
+        __('Manager'),
+        $editor_caps
+    );
 
-        // Voeg de nieuwe rol toe met editor capabilities
-        $manager = add_role(
-            'manager',
-            __('Manager'),
-            $editor_caps
+    if ($manager) {
+        // Custom post type capabilities
+        $custom_caps = array();
+
+        // Admin capabilities
+        $admin_caps = array(
+            'manage_options',
+            'list_users',
+            'edit_users',
+            'create_users',
+            'delete_users',
+            'promote_users',
+            'edit_theme_options',
+            'manage_categories',
+            'import',
+            'export'
         );
 
-        if ($manager) {
-            // Custom post type capabilities
-            $custom_caps = array();
-
-            // Admin capabilities
-            $admin_caps = array(
-                'manage_options',
-                'list_users',
-                'edit_users',
-                'create_users',
-                'delete_users',
-                'promote_users',
-                'edit_theme_options',
-                'manage_categories',
-                'import',
-                'export'
-            );
-
-            foreach (array_merge($custom_caps, $admin_caps) as $cap) {
-                $manager->add_cap($cap);
-            }
+        foreach (array_merge($custom_caps, $admin_caps) as $cap) {
+            $manager->add_cap($cap);
         }
     }
+}
 
 add_action('init', 'add_manager_role');
+
+function add_form_manager_role()
+{
+    // Get editor role capabilities
+    $editor = get_role('editor');
+    $editor_caps = $editor->capabilities;
+
+    // Voeg de nieuwe rol toe met editor capabilities
+    $manager = add_role(
+        'form_manager',
+        __('Manager + formulieren'),
+        $editor_caps
+    );
+
+    if ($manager) {
+        // Custom post type capabilities
+        $custom_caps = array();
+
+        // Admin capabilities
+        $admin_caps = array(
+            'manage_options',
+            'list_users',
+            'edit_users',
+            'create_users',
+            'delete_users',
+            'promote_users',
+            'edit_theme_options',
+            'manage_categories',
+            'import',
+            'export'
+        );
+
+        // Formidable Forms capabilities
+        $formidable_caps = array(
+            'frm_view_forms',
+            'frm_edit_forms',
+            'frm_create_forms',
+            'frm_delete_forms',
+            'frm_view_entries',
+            'frm_edit_entries',
+            'frm_delete_entries'
+        );
+
+        foreach (array_merge($custom_caps, $admin_caps, $formidable_caps) as $cap) {
+            $manager->add_cap($cap);
+        }
+    }
+}
+
+add_action('init', 'add_form_manager_role');
+
 
 // Beperk welke rollen een manager kan toewijzen/bewerken
 function restrict_user_role_options($roles)
