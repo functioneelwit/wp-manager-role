@@ -183,7 +183,7 @@ function reorder_user_roles($roles) {
     // Voeg ze weer toe in de gewenste volgorde
     $new_roles = [];
     if ($admin) $new_roles['administrator'] = $admin;
-    if ($forms) $new_roles['form_manager'] = $form_manager;
+    if ($form_manager) $new_roles['form_manager'] = $form_manager;
     if ($manager) $new_roles['manager'] = $manager;
     if ($editor) $new_roles['editor'] = $editor;
 
