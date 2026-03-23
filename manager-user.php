@@ -4,7 +4,7 @@ Plugin Name: Manager gebruiker (Publiek.com)
 Plugin URI: https://publiek.com
 Description: Deze plugin voegt het gebruikerstypes 'Manager' & 'Formuliermanager' toe en stelt daarvoor speciale rechten in.
 Author: Publiek.com
-Version: 1.4
+Version: 1.5
 Author URI: https://publiek.com
 */
 
@@ -18,8 +18,8 @@ function mijn_plugin_updates_instellen() {
         'wp-manager-role'
     );
 
-    // Specifiek de main branch volgen
-    $updateChecker->setBranch('main');
+    // Use GitHub releases instead of branch
+    $updateChecker->getVcsApi()->enableReleaseAssets();
 }
 add_action('init', 'mijn_plugin_updates_instellen');
 
