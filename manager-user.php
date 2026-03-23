@@ -4,7 +4,7 @@ Plugin Name: Manager gebruiker (Publiek.com)
 Plugin URI: https://publiek.com
 Description: Deze plugin voegt het gebruikerstypes 'Manager' & 'Formuliermanager' toe en stelt daarvoor speciale rechten in.
 Author: Publiek.com
-Version: 1.5
+Version: 1.6
 Author URI: https://publiek.com
 */
 
@@ -102,7 +102,9 @@ function add_form_manager_role()
             'frm_delete_forms',
             'frm_view_entries',
             'frm_edit_entries',
-            'frm_delete_entries'
+            'frm_delete_entries',
+            'frm_edit_styles',
+            'frm_change_settings'
         );
 
         foreach (array_merge($custom_caps, $admin_caps, $formidable_caps) as $cap) {
@@ -172,16 +174,18 @@ function reorder_user_roles($roles) {
     // Tijdelijk opslaan van de rollen die we willen herschikken
     $admin = isset($roles['administrator']) ? $roles['administrator'] : null;
     $manager = isset($roles['manager']) ? $roles['manager'] : null;
+    $form_manager = isset($roles['form_manager']) ? $roles['form_manager'] : null;
     $editor = isset($roles['editor']) ? $roles['editor'] : null;
 
     // Verwijder ze uit de originele array
-    unset($roles['administrator'], $roles['manager'], $roles['editor']);
+    unset($roles['administrator'], $roles['manager'], $roles['form_manager'], $roles['editor']);
 
     // Voeg ze weer toe in de gewenste volgorde
     $new_roles = [];
     if ($admin) $new_roles['administrator'] = $admin;
-    if ($manager) $new_roles['manager'] = $manager;    // Manager direct na Administrator
-    if ($editor) $new_roles['editor'] = $editor;      // Editor komt na Manager
+    if ($forms) $new_roles['form_manager'] = $form_manager;
+    if ($manager) $new_roles['manager'] = $manager;
+    if ($editor) $new_roles['editor'] = $editor;
 
     // Voeg de overige rollen weer toe
     return array_merge($new_roles, $roles);
