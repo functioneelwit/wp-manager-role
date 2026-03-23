@@ -4,7 +4,7 @@ Plugin Name: Manager gebruiker (Publiek.com)
 Plugin URI: https://publiek.com
 Description: Deze plugin voegt het gebruikerstypes 'Manager' & 'Formuliermanager' toe en stelt daarvoor speciale rechten in.
 Author: Publiek.com
-Version: 2.0
+Version: 2.1
 Author URI: https://publiek.com
 */
 
