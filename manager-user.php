@@ -103,9 +103,10 @@ function add_form_manager_role()
             'frm_view_entries',
             'frm_edit_entries',
             'frm_delete_entries',
-            'frm_edit_styles',
+            'frm_edit_displays',
             'frm_change_settings',
-            'frm_view_settings'
+            'frm_view_settings',
+            'frm_view_reports'
         );
 
         foreach (array_merge($custom_caps, $admin_caps, $formidable_caps) as $cap) {
