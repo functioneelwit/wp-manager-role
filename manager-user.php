@@ -4,7 +4,7 @@ Plugin Name: Manager gebruiker (Publiek.com)
 Plugin URI: https://publiek.com
 Description: Deze plugin voegt het gebruikerstypes 'Manager' & 'Formuliermanager' toe en stelt daarvoor speciale rechten in.
 Author: Publiek.com
-Version: 2.1
+Version: 2.2
 Author URI: https://publiek.com
 */
 
@@ -116,6 +116,33 @@ function add_form_manager_role()
 }
 
 add_action('init', 'add_form_manager_role');
+
+// Temporary: Update existing form_manager roles with missing capabilities
+function update_form_manager_capabilities() {
+    $role = get_role('form_manager');
+
+    if ($role) {
+        // Formidable Forms capabilities
+        $formidable_caps = array(
+            'frm_view_forms',
+            'frm_edit_forms',
+            'frm_create_forms',
+            'frm_delete_forms',
+            'frm_view_entries',
+            'frm_edit_entries',
+            'frm_delete_entries',
+            'frm_edit_displays',
+            'frm_change_settings',
+            'frm_view_settings',
+            'frm_view_reports'
+        );
+
+        foreach ($formidable_caps as $cap) {
+            $role->add_cap($cap);
+        }
+    }
+}
+add_action('init', 'update_form_manager_capabilities');
 
 
 // Beperk welke rollen een manager kan toewijzen/bewerken
